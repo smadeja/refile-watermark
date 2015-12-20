@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 gemspec
 
 gem "refile", github: "refile/refile"
+gem "refile-mini_magick", "~> 0.4"
 gem "rspec", "~> 3.0"
 gem "rake"
 gem "pry"
