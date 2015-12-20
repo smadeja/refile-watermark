@@ -1,5 +1,7 @@
 # Refile::Watermark
 
+Warning: this is basically sample code, it's not on RubyGems and the code isn't very good, though it should work.
+
 A Refile image processor to enable creation of watermarks
 
 ## Installation
@@ -20,7 +22,11 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Just like any other Refile processor, for example:
+
+    <%= image_tag attachment_url(@user, :profile_image, :fill_watermark_image, 300, 300, "watermark.jpg", format: "jpg") %>
+
+    <%= image_tag attachment_url(@user, :profile_image, :fill_watermark_text, 300, 300, "My Watermark", format: "jpg") %>
 
 ## Contributing
 
