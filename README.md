@@ -24,7 +24,7 @@ Or install it yourself as:
 
 ### Fill watermark image method
 
-<%= fill_watermark_image(img, width, height, watermark_image_filename, gravity = "Center", horizontal_margin = 0, vertical_margin = 0, opacity = 100) %>
+`fill_watermark_image(img, width, height, watermark_image_filename, gravity = "Center", horizontal_margin = 0, vertical_margin = 0, opacity = 100)`
 
 Just like any other Refile processor, for example:
 
