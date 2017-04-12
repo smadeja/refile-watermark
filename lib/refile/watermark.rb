@@ -26,20 +26,19 @@ module Refile
     # @param [string] gravity                  which part of the image to focus on and put the watermark on
     # @return [void]
     # @see http://www.imagemagick.org/script/command-line-options.php#gravity
-    def fill_watermark_image(img, width, height, watermark_image_filename, gravity = "Center")
+    def fill_watermark_image(img, width, height, watermark_image_filename, gravity = "Center", horizontal_margin = 0, vertical_margin = 0, opacity = 100)
       Refile::MiniMagick.new(:fill).fill(img, width, height, gravity)
 
       second_image = ::MiniMagick::Image.new(Rails.root.join('app', 'assets', 'images', watermark_image_filename).to_s)
 
       result = img.composite(second_image) do |composite|
         composite.compose "Over"    # OverCompositeOp
-        #composite.geometry "+20+20" # copy second_image onto first_image from (20, 20)
-        composite.dissolve "20,100" # make second_image 50% transparent on top of first image
+        composite.geometry "+#{horizontal_margin}+#{vertical_margin}"
+        composite.dissolve "#{opacity},100"
         composite.gravity gravity
       end
       result.write img.path
     end
-
 
     # Watermarks the image with text, and also uses the fill processor
     # to resize the initial image
