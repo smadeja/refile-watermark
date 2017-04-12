@@ -33,8 +33,8 @@ module Refile
 
       result = img.composite(second_image) do |composite|
         composite.compose "Over"    # OverCompositeOp
-        composite.geometry "+#{horizontal_margin}+#{vertical_margin}"
-        composite.dissolve "#{opacity},100"
+        composite.geometry "+#{horizontal_margin}+#{vertical_margin}" # copy second_image onto first_image from (horizontal_margin, vertical_margin)
+        composite.dissolve "#{opacity},100" # make second_image more or less transparent on top of first image
         composite.gravity gravity
       end
       result.write img.path
