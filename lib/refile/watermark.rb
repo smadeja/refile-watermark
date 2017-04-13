@@ -26,7 +26,7 @@ module Refile
     # @param [string] gravity                  which part of the image to focus on and put the watermark on
     # @return [void]
     # @see http://www.imagemagick.org/script/command-line-options.php#gravity
-    def fill_watermark_image(img, width, height, watermark_image_filename, gravity = "Center", horizontal_margin = 0, vertical_margin = 0, opacity = 100)
+    def fill_watermark_image(img, width, height, watermark_image_filename, gravity = "Center", horizontal_margin = 0, vertical_margin = 0, opacity = 20)
       Refile::MiniMagick.new(:fill).fill(img, width, height, gravity)
 
       second_image = ::MiniMagick::Image.new(Rails.root.join('app', 'assets', 'images', watermark_image_filename).to_s)
