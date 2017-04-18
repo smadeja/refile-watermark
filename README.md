@@ -24,7 +24,7 @@ Or install it yourself as:
 
 Just like any other Refile processor, for example:
 
-    <%= image_tag attachment_url(@user, :profile_image, :fill_watermark_image, 300, 300, "watermark.jpg", "SouthEast", 10, 10, 50, format: "jpg") %>
+    <%= image_tag attachment_url(@user, :profile_image, :fill_watermark_image, 300, 300, "watermark.jpg", "North", 10, 10, 50, "SouthEast", format: "jpg") %>
 
     <%= image_tag attachment_url(@user, :profile_image, :fill_watermark_text, 300, 300, "My Watermark", format: "jpg") %>
 
@@ -32,7 +32,7 @@ Just like any other Refile processor, for example:
 
 Fill watermark image method:
 
-    fill_watermark_image(img, width, height, watermark_image_filename, gravity = "Center", horizontal_margin = 0, vertical_margin = 0, opacity = 20)
+    fill_watermark_image(img, width, height, watermark_image_filename, gravity = "Center", horizontal_margin = 0, vertical_margin = 0, opacity = 20, logo_gravity = nil)
 
 ## Contributing
 
