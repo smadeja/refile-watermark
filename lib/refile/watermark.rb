@@ -40,6 +40,52 @@ module Refile
       result.write img.path
     end
 
+    def fit_watermark_image(img, width, height, watermark_image_filename,
+      opacity = 20, gravity = "SouthEast")
+
+      Refile::MiniMagick.new(:fit).fit(img, width, height)
+
+      second_image = ::MiniMagick::Image.open(Rails.root.join(
+        "app", "assets", "images", watermark_image_filename
+      ).to_s)
+
+      watermark_size_ratio = 0.2
+      margin_size_ratio = 0.05
+
+      # the upper limit for image size to be used in the calculations
+      size_calculation_threshold = 400
+
+      if img.width < img.height
+        watermark_size_limit =
+          (img.width < size_calculation_threshold ?
+            img.width : size_calculation_threshold) * watermark_size_ratio
+
+        margin_size =
+          (img.width < size_calculation_threshold ?
+            img.width : size_calculation_threshold) * margin_size_ratio
+      else
+        watermark_size_limit =
+          (img.height < size_calculation_threshold ?
+            img.height : size_calculation_threshold) * watermark_size_ratio
+
+        margin_size =
+          (img.height < size_calculation_threshold ?
+            img.height : size_calculation_threshold) * margin_size_ratio
+      end
+
+      Refile::MiniMagick.new(:fit).fit(second_image,
+        watermark_size_limit, watermark_size_limit)
+
+      result = img.composite(second_image) do |composite|
+        composite.compose("Over")
+        composite.geometry("+#{margin_size}+#{margin_size}")
+        composite.dissolve("#{opacity},100")
+        composite.gravity(gravity)
+      end
+
+      result.write(img.path)
+    end
+
     # Watermarks the image with text, and also uses the fill processor
     # to resize the initial image
     #
@@ -93,6 +139,6 @@ module Refile
 end
 
 # Register Watermark as a valid Refile processor
-[:fill_watermark_image, :fill_watermark_text].each do |name|
+[:fill_watermark_image, :fit_watermark_image, :fill_watermark_text].each do |name|
   Refile.processor(name, Refile::Watermark.new(name))
 end
