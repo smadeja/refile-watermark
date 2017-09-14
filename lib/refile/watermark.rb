@@ -52,25 +52,12 @@ module Refile
       watermark_size_ratio = 0.2
       margin_size_ratio = 0.05
 
-      # the upper limit for image size to be used in the calculations
-      size_calculation_threshold = 400
-
       if img.width < img.height
-        watermark_size_limit =
-          (img.width < size_calculation_threshold ?
-            img.width : size_calculation_threshold) * watermark_size_ratio
-
-        margin_size =
-          (img.width < size_calculation_threshold ?
-            img.width : size_calculation_threshold) * margin_size_ratio
+        watermark_size_limit = img.width * watermark_size_ratio
+        margin_size = img.width * margin_size_ratio
       else
-        watermark_size_limit =
-          (img.height < size_calculation_threshold ?
-            img.height : size_calculation_threshold) * watermark_size_ratio
-
-        margin_size =
-          (img.height < size_calculation_threshold ?
-            img.height : size_calculation_threshold) * margin_size_ratio
+        watermark_size_limit = img.height * watermark_size_ratio
+        margin_size = img.height * margin_size_ratio
       end
 
       Refile::MiniMagick.new(:fit).fit(second_image,
